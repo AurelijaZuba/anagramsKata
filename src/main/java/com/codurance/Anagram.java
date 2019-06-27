@@ -33,25 +33,27 @@ public class Anagram {
 
     private static List<String> anagramsOf(String word) {
         List<String> anagrams = new ArrayList<>();
-
         String reversedWord = new StringBuilder(word).reverse().toString();
 
+
         if (isLength(word, 1))
-            anagrams.add(word);
+            anagrams = asList(word);
         if (isLength(word, 2))
             anagrams = asList(word, reversedWord);
         if (isLengthGreaterThanTwo(word)) {
-            handleWordsLongerThanTwo(word, anagrams);
+            anagrams = handleWordsLongerThanTwo(word);
         }
         return anagrams;
     }
 
-    private static void handleWordsLongerThanTwo(String word, List<String> anagrams) {
+    private static List<String> handleWordsLongerThanTwo(String word) {
+        List<String> anagrams = new ArrayList<>();
         for (int index = 0; index < word.length(); index++) {
             List<String> subgrams = anagramsOf(extractRemainingLetters(word, index));
             char firstLetter = word.charAt(index);
             anagrams.addAll(apendFirstLetterToSubgram(subgrams, firstLetter));
         }
+        return anagrams;
     }
 
     private static String extractRemainingLetters(String word, int j) {
