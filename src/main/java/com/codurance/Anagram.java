@@ -34,24 +34,46 @@ public class Anagram {
     private static List<String> anagramsOf(String word) {
         List<String> anagrams = new ArrayList<>();
 
-        StringBuilder tempWord = new StringBuilder(word);
-        StringBuilder reversedWord = tempWord.reverse();
+        String reversedWord = new StringBuilder(word).reverse().toString();
 
-        if(word.length() == 1)
+        if (isLength(word, 1))
             anagrams.add(word);
-        if(word.length() == 2)
-            anagrams = asList(word, reversedWord.toString());
-        if(word.length() > 2) {
-            for(int j = 0; j < word.length(); j++){
-                StringBuilder remainingLetters = new StringBuilder(word);
-                remainingLetters.deleteCharAt(j);
-                List<String> subgrams = anagramsOf(remainingLetters.toString());
-                for(int i = 0; i < subgrams.size(); i++) {
-                    anagrams.add(word.charAt(j) + subgrams.get(i));
-                }
-            }
+        if (isLength(word, 2))
+            anagrams = asList(word, reversedWord);
+        if (isLengthGreaterThanTwo(word)) {
+            handleWordsLongerThanTwo(word, anagrams);
         }
-
         return anagrams;
+    }
+
+    private static void handleWordsLongerThanTwo(String word, List<String> anagrams) {
+        for (int index = 0; index < word.length(); index++) {
+            List<String> subgrams = anagramsOf(extractRemainingLetters(word, index));
+            char firstLetter = word.charAt(index);
+            anagrams.addAll(apendFirstLetterToSubgram(subgrams, firstLetter));
+        }
+    }
+
+    private static String extractRemainingLetters(String word, int j) {
+        StringBuilder remainingLetters = new StringBuilder(word);
+        remainingLetters.deleteCharAt(j);
+        return remainingLetters.toString();
+    }
+
+    private static List<String> apendFirstLetterToSubgram(List<String> subgrams, char firstLetter) {
+        List<String> anagrams = new ArrayList<>();
+
+        for (int i = 0; i < subgrams.size(); i++) {
+            anagrams.add(firstLetter + subgrams.get(i));
+        }
+        return anagrams;
+    }
+
+    private static boolean isLengthGreaterThanTwo(String word) {
+        return word.length() > 2;
+    }
+
+    private static boolean isLength(String word, int length) {
+        return word.length() == length;
     }
 }
