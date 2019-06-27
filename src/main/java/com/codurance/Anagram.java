@@ -6,35 +6,10 @@ import java.util.List;
 import static java.util.Arrays.asList;
 
 public class Anagram {
-    public static String[] generate(String input) {
-        List<String> output = new ArrayList<>();
+    public static String[] generate(String word) {
 
-//        output.add(input);
-
-        return anagramsOf(input).toArray(new String[0]);
-
-//        if (input.length() >= 3) {
-//            output.add("acb");
-//            output.add("bac");
-//            output.add("bca");
-//            output.add("cab");
-//            output.add("cba");
-//
-//            System.out.println((anagramsOf(input)));
-//
-//            System.out.println(anagramsOf("abcd"));
-//        }
-//
-//        if (input.length() > 1 && input.length() < 3)
-//            output.add("ba");
-
-//        return output.toArray(new String[0]);
-    }
-
-    private static List<String> anagramsOf(String word) {
         List<String> anagrams = new ArrayList<>();
         String reversedWord = new StringBuilder(word).reverse().toString();
-
 
         if (isLength(word, 1))
             anagrams = asList(word);
@@ -43,13 +18,27 @@ public class Anagram {
         if (isLengthGreaterThanTwo(word)) {
             anagrams = handleWordsLongerThanTwo(word);
         }
-        return anagrams;
+        return anagrams.toArray(new String[0]);
+
+//        if (input.length() >= 3) {
+//            output.add("acb");
+//            output.add("bac");
+//            output.add("bca");
+//            output.add("cab");
+//            output.add("cba");
+//
+//        }
+//
+//        if (input.length() > 1 && input.length() < 3)
+//            output.add("ba");
+
+//        return output.toArray(new String[0]);
     }
 
     private static List<String> handleWordsLongerThanTwo(String word) {
         List<String> anagrams = new ArrayList<>();
         for (int index = 0; index < word.length(); index++) {
-            List<String> subgrams = anagramsOf(extractRemainingLetters(word, index));
+            String[] subgrams = generate(extractRemainingLetters(word, index));
             char firstLetter = word.charAt(index);
             anagrams.addAll(apendFirstLetterToSubgram(subgrams, firstLetter));
         }
@@ -62,11 +51,11 @@ public class Anagram {
         return remainingLetters.toString();
     }
 
-    private static List<String> apendFirstLetterToSubgram(List<String> subgrams, char firstLetter) {
+    private static List<String> apendFirstLetterToSubgram(String[] subgrams, char firstLetter) {
         List<String> anagrams = new ArrayList<>();
 
-        for (int i = 0; i < subgrams.size(); i++) {
-            anagrams.add(firstLetter + subgrams.get(i));
+        for (int i = 0; i < subgrams.length; i++) {
+            anagrams.add(firstLetter + subgrams[i]);
         }
         return anagrams;
     }
