@@ -18,6 +18,7 @@ public class Anagram {
         if (isLengthGreaterThanTwo(word)) {
             anagrams = handleWordsLongerThanTwo(word);
         }
+        System.out.println(anagrams);
         return anagrams.toArray(new String[0]);
 
 //        if (input.length() >= 3) {
