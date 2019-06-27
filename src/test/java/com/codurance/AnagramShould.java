@@ -38,7 +38,8 @@ public class AnagramShould {
         return Stream.of(
                 arguments(new String[]{"a"}, "a"),
                 arguments(new String[]{"ab", "ba"}, "ab"),
-                arguments(new String[]{"abc", "acb", "bac", "bca", "cab", "cba"}, "abc")
+                arguments(new String[]{"abc", "acb", "bac", "bca", "cab", "cba"}, "abc"),
+                arguments(new String[]{"bcd", "bdc", "cbd", "cdb", "dbc", "dcb"}, "bcd")
         );
     }
     @ParameterizedTest
