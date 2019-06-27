@@ -36,4 +36,13 @@ public class AnagramShould {
 
         assertArrayEquals(expected, results);
     }
+
+    @Test
+    void return_2_variations_for_2_different_letters() {
+        String[] expected = {"ab", "ba"};
+
+        String[] results = Anagram.generate("ab");
+
+        assertArrayEquals(expected, results);
+    }
 }
