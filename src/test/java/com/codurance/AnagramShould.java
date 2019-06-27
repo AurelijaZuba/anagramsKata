@@ -45,4 +45,13 @@ public class AnagramShould {
 
         assertArrayEquals(expected, results);
     }
+
+    @Test
+    void return_6_variations_for_3_different_letters() {
+        String[] expected = {"abc", "acb", "bac", "bca", "cab", "cba"};
+
+        String[] results = Anagram.generate("abc");
+
+        assertArrayEquals(expected, results);
+    }
 }
