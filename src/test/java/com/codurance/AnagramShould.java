@@ -2,8 +2,6 @@ package com.codurance;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.stream.IntStream;
-
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 public class AnagramShould {
@@ -18,13 +16,24 @@ public class AnagramShould {
 
     @Test
     void acceptance_test() {
-        String[] expected = {"biro", "bior", "brio", "broi", "boir", "bori",
+        String[] expected = {
+                "biro", "bior", "brio", "broi", "boir", "bori",
                 "ibro", "ibor", "irbo", "irob", "iobr", "iorb",
                 "rbio", "rboi", "ribo", "riob", "roib", "robi",
-                "obir", "obri", "oibr", "oirb", "orbi", "orib"};
+                "obir", "obri", "oibr", "oirb", "orbi", "orib"
+        };
 
 
         String[] results = Anagram.generate("biro");
+        assertArrayEquals(expected, results);
+    }
+
+    @Test
+    void return_a_single_letter_for_the_word_a() {
+        String[] expected = {"a"};
+
+        String[] results = Anagram.generate("a");
+
         assertArrayEquals(expected, results);
     }
 }
