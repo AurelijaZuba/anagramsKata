@@ -1,8 +1,14 @@
 package com.codurance;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 public class AnagramShould {
 
@@ -28,29 +34,17 @@ public class AnagramShould {
         assertArrayEquals(expected, results);
     }
 
-    @Test
-    void return_a_single_letter_for_the_word_a() {
-        String[] expected = {"a"};
-
-        String[] results = Anagram.generate("a");
-
-        assertArrayEquals(expected, results);
+    private static Stream<Arguments> letterAnagrams(){
+        return Stream.of(
+                arguments(new String[]{"a"}, "a"),
+                arguments(new String[]{"ab", "ba"}, "ab"),
+                arguments(new String[]{"abc", "acb", "bac", "bca", "cab", "cba"}, "abc")
+        );
     }
-
-    @Test
-    void return_2_variations_for_2_different_letters() {
-        String[] expected = {"ab", "ba"};
-
-        String[] results = Anagram.generate("ab");
-
-        assertArrayEquals(expected, results);
-    }
-
-    @Test
-    void return_6_variations_for_3_different_letters() {
-        String[] expected = {"abc", "acb", "bac", "bca", "cab", "cba"};
-
-        String[] results = Anagram.generate("abc");
+    @ParameterizedTest
+    @MethodSource("letterAnagrams")
+    void generate_list_of_anagrams(String[] expected, String word) {
+        String[] results = Anagram.generate(word);
 
         assertArrayEquals(expected, results);
     }
